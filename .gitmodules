@@ -1,0 +1,3 @@
+[submodule "themes\\pelican-sober"]
+	path = themes\\pelican-sober
+	url = https://gitee.com/garricklin/pelican-sober

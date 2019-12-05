@@ -75,7 +75,7 @@ def reserve(c):
 @task
 def preview(c):
     """Build production version of site"""
-    c.run('pelican -s {settings_publish}'.format(**CONFIG))
+    c.run('pelican content')
 
 @task
 def livereload(c):
@@ -103,26 +103,9 @@ def livereload(c):
 
 @task
 def publish(c):
-    """Publish to production via rsync"""
-    c.run('pelican -s {settings_publish}'.format(**CONFIG))
-    c.run(
-        'rsync --delete --exclude ".DS_Store" -pthrvz -c '
-        '-e "ssh -p {ssh_port}" '
-        '{} {ssh_user}@{ssh_host}:{ssh_path}'.format(
-            CONFIG['deploy_path'].rstrip('/') + '/',
-            **CONFIG))
-
-@task
-def ghpages(c):
     """Publish to GitHub Pages"""     
     preview(c)
     c.run('git add .')
     c.run('git commit -m {commit_message}'.format(**CONFIG))
     c.run('git push origin {github_pages_branch}'.format(**CONFIG))
-    # print(cmd)
-    # c.run(cmd)
-    # c.run('ghp-import -b {github_pages_branch} '
-    #       '-m {commit_message} '
-    #       '{deploy_path} -p'.format(**CONFIG))
-    # ghp-import -b master -m "Publish site on 2019-12-06" output -p
 
