@@ -116,11 +116,11 @@ def publish(c):
 def ghpages(c):
     """Publish to GitHub Pages"""     
     preview(c)
-    cmd = 'git add . ;' \
-          'git commit -m {commit_message} ;'                 \
-          'git push origin {github_pages_branch}'.format(**CONFIG)
-    print(cmd)
-    c.run(cmd)
+    c.run('git add .')
+    c.run('git commit -m {commit_message}'.format(**CONFIG))
+    c.run('git push origin {github_pages_branch}'.format(**CONFIG))
+    # print(cmd)
+    # c.run(cmd)
     # c.run('ghp-import -b {github_pages_branch} '
     #       '-m {commit_message} '
     #       '{deploy_path} -p'.format(**CONFIG))
